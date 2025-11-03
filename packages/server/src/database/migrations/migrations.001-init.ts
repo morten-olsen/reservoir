@@ -27,10 +27,10 @@ type DocumentRow = {
   id: string;
   type: string;
   source: string | null;
-  data: string;
-  createdAt: string;
-  updatedAt: string;
-  deletedAt: string | null;
+  data: string | unknown;
+  createdAt: string | Date;
+  updatedAt: string | Date;
+  deletedAt: string | Date | null;
 };
 
 type Tables = {

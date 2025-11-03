@@ -49,15 +49,15 @@ class DocumentsService {
           action: 'inserted',
         };
       }
-      const currentData = JSON.parse(current.data);
+      const currentData = typeof current.data === 'string' ? JSON.parse(current.data) : current.data;
       if (equal(currentData, document.data)) {
         return {
           ...current,
           data: currentData,
           id,
-          createdAt: current.createdAt,
-          updatedAt: current.updatedAt,
-          deletedAt: current.deletedAt || null,
+          createdAt: new Date(current.createdAt).toISOString(),
+          updatedAt: new Date(current.updatedAt).toISOString(),
+          deletedAt: current.deletedAt ? new Date(current.deletedAt).toISOString() : null,
           action: 'skipped',
         };
       }
@@ -72,9 +72,9 @@ class DocumentsService {
         ...current,
         id,
         data: document.data,
-        createdAt: current.createdAt,
+        createdAt: new Date(current.createdAt).toISOString(),
         updatedAt: now.toISOString(),
-        deletedAt: current.deletedAt || null,
+        deletedAt: current.deletedAt ? new Date(current.deletedAt).toISOString() : null,
         action: 'updated',
       };
     });
