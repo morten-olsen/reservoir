@@ -1,0 +1,41 @@
+{
+  "values": {
+    "monoRepo": true,
+    "packagePrefix": "@morten-olsen/reservoir-",
+    "packageVersion": "1.0.0"
+  },
+  "entries": [
+    {
+      "timestamp": "2025-11-03T09:33:18.994Z",
+      "template": "monorepo",
+      "values": {
+        "monoRepo": true,
+        "packagePrefix": "@morten-olsen/reservoir-",
+        "packageVersion": "1.0.0"
+      }
+    },
+    {
+      "timestamp": "2025-11-03T09:33:32.155Z",
+      "template": "eslint",
+      "values": {
+        "monoRepo": true,
+        "packagePrefix": "@morten-olsen/reservoir-",
+        "packageVersion": "1.0.0",
+        "target-pkg": {
+          "name": "@morten-olsen/reservoir-repo",
+          "dir": "/Users/alice/Projects/private/incubator/reservoir"
+        }
+      }
+    },
+    {
+      "timestamp": "2025-11-03T09:33:49.149Z",
+      "template": "pkg",
+      "values": {
+        "monoRepo": true,
+        "packagePrefix": "@morten-olsen/reservoir-",
+        "packageVersion": "1.0.0",
+        "packageName": "server"
+      }
+    }
+  ]
+}

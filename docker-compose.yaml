@@ -1,0 +1,9 @@
+name: reservoir
+services:
+  app:
+    build:
+      context: .
+      dockerfile: ./packages/server/Dockerfile
+
+    ports:
+      - 9111:9111

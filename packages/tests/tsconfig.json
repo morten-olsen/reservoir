@@ -1,0 +1,9 @@
+{
+  "compilerOptions": {
+    "outDir": "./dist"
+  },
+  "include": [
+    "src/**/*.ts"
+  ],
+  "extends": "@morten-olsen/reservoir-configs/tsconfig.json"
+}
