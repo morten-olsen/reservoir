@@ -1,0 +1,33 @@
+{
+  "version": "1.0.0",
+  "name": "@morten-olsen/reservoir-repo",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "test:lint": "eslint",
+    "build": "turbo build",
+    "build:dev": "tsc --build --watch",
+    "test:unit": "vitest --run --coverage --passWithNoTests",
+    "test": "pnpm run \"/^test:.+/\""
+  },
+  "packageManager": "pnpm@10.6.0",
+  "workspaces": [
+    "packages/*",
+    "apps/*"
+  ],
+  "devDependencies": {
+    "turbo": "2.6.0",
+    "typescript": "5.9.3",
+    "vitest": "4.0.6",
+    "@vitest/coverage-v8": "4.0.6",
+    "@eslint/eslintrc": "3.3.1",
+    "@eslint/js": "9.39.0",
+    "@pnpm/find-workspace-packages": "6.0.9",
+    "eslint": "9.39.0",
+    "eslint-config-prettier": "10.1.8",
+    "eslint-plugin-import": "2.32.0",
+    "eslint-plugin-prettier": "5.5.4",
+    "prettier": "3.6.2",
+    "typescript-eslint": "8.46.2"
+  }
+}
