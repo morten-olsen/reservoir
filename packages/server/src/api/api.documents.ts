@@ -15,20 +15,15 @@ const documentsPlugin: FastifyPluginAsyncZod = async (app) => {
       operationId: 'v1.documents.put',
       tags: ['documents'],
       summary: 'Upsert documents',
-      body: z.object({
-        items: z.array(upsertDocumentRequestSchema),
-      }),
+      body: upsertDocumentRequestSchema,
       response: {
-        200: z.object({
-          items: z.array(upsertDocumentResponseSchema),
-        }),
+        200: upsertDocumentResponseSchema,
       },
     },
     handler: async (req, reply) => {
       const documentsService = app.services.get(DocumentsService);
-      const { items } = req.body;
-      const results = await Promise.all(items.map((item) => documentsService.upsert(item)));
-      return reply.send({ items: results });
+      const result = await documentsService.upsert(req.body);
+      return reply.send(result);
     },
   });
 };
