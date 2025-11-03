@@ -1,4 +1,3 @@
-import { z } from 'zod';
 import type { FastifyPluginAsyncZod } from 'fastify-type-provider-zod';
 
 import { DocumentsService } from '#root/services/documents/documents.ts';
@@ -12,7 +11,7 @@ const documentsPlugin: FastifyPluginAsyncZod = async (app) => {
     method: 'POST',
     url: '',
     schema: {
-      operationId: 'v1.documents.put',
+      operationId: 'v1.documents.post',
       tags: ['documents'],
       summary: 'Upsert documents',
       body: upsertDocumentRequestSchema,
