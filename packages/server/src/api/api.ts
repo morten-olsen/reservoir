@@ -1,9 +1,12 @@
 import fastify from 'fastify';
+import fastifySensible from '@fastify/sensible';
 import fastifySwagger from '@fastify/swagger';
 import fastifyScalar from '@scalar/fastify-api-reference';
+import YAML from 'yaml';
 import { jsonSchemaTransform, serializerCompiler, validatorCompiler } from 'fastify-type-provider-zod';
 
 import { documentsPlugin } from './api.documents.ts';
+import { viewsPlugin } from './api.views.ts';
 
 import { Services } from '#root/utils/utils.services.ts';
 import { DatabaseService } from '#root/database/database.ts';
@@ -22,6 +25,16 @@ const createApi = async (services: Services = new Services()) => {
   app.setValidatorCompiler(validatorCompiler);
   app.setSerializerCompiler(serializerCompiler);
   app.decorate('services', services);
+  app.addContentTypeParser('application/yaml', { parseAs: 'buffer' }, (_, body, done) => {
+    try {
+      const parsed = YAML.parse(body.toString('utf8')); // Parse the buffer as YAML
+      done(null, parsed); // Call done with null for error and the parsed object
+    } catch {
+      done(app.httpErrors.badRequest('Invalid YAML format'));
+    }
+  });
+
+  await app.register(fastifySensible);
 
   await app.register(fastifySwagger, {
     openapi: {
@@ -40,6 +53,10 @@ const createApi = async (services: Services = new Services()) => {
 
   await app.register(documentsPlugin, {
     prefix: '/api/v1/documents',
+  });
+
+  await app.register(viewsPlugin, {
+    prefix: '/api/v1/views',
   });
 
   app.addHook('onReady', async () => {

@@ -11,7 +11,7 @@ const documentsPlugin: FastifyPluginAsyncZod = async (app) => {
     method: 'POST',
     url: '',
     schema: {
-      operationId: 'v1.documents.post',
+      operationId: 'v1.documents.upsert',
       tags: ['documents'],
       summary: 'Upsert documents',
       body: upsertDocumentRequestSchema,
