@@ -75,19 +75,22 @@ class ViewsService {
     const dbService = this.#services.get(DatabaseService);
     const db = await dbService.getInstance();
     const subquery = db.raw(query);
-    await db.schema.createViewOrReplace(name, (view) => {
-      // view.columns(columns);
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      view.as(subquery as any);
+    await db.transaction(async (trx) => {
+      await trx.schema.dropViewIfExists(name);
+      await trx.schema.createViewOrReplace(name, (view) => {
+        // view.columns(columns);
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        view.as(subquery as any);
+      });
+      if (description) {
+        const sql = trx.raw(`COMMENT ON VIEW ?? IS ?;`, [name, description]);
+        await trx.raw(sql.toQuery());
+      }
+      for (const [columnName, info] of Object.entries(columns)) {
+        const sql = trx.raw(`COMMENT ON COLUMN ??.?? IS ?;`, [name, columnName, info.description || null]);
+        await trx.raw(sql.toQuery());
+      }
     });
-    if (description) {
-      const sql = db.raw(`COMMENT ON VIEW ?? IS ?;`, [name, description]);
-      await db.raw(sql.toQuery());
-    }
-    for (const [columnName, info] of Object.entries(columns)) {
-      const sql = db.raw(`COMMENT ON COLUMN ??.?? IS ?;`, [name, columnName, info.description || null]);
-      await db.raw(sql.toQuery());
-    }
   };
 
   public remove = async (name: string) => {
